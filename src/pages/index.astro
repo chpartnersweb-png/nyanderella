@@ -13,11 +13,27 @@ import Faq from '../components/Faq.astro';
 import Visit from '../components/Visit.astro';
 import Footer from '../components/Footer.astro';
 import Arrow from '../components/Arrow.astro';
+import Loading from '../components/Loading.astro';
 ---
 
 <html lang="ja">
   <head>
     <meta charset="utf-8" />
+    <script is:inline>
+      (() => {
+        const root = document.documentElement;
+        root.classList.add('is-loading');
+        root.dataset.pageLoadingAt = String(performance.now());
+        const release = () => {
+          root.classList.remove('is-loading');
+          delete root.dataset.pageLoadingAt;
+          document.querySelector('[data-page-loader]')?.remove();
+        };
+        // Release the page even if the main bundle or an image fails to load.
+        window.setTimeout(release, 4200);
+        window.addEventListener('pageshow', event => { if (event.persisted) release(); });
+      })();
+    </script>
     <link rel="icon" href="/favicon.ico" />
     <link rel="stylesheet" href="/fonts/zen-maru-gothic.css" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -35,6 +51,7 @@ import Arrow from '../components/Arrow.astro';
   </head>
 
   <body id="top">
+    <Loading />
     <a class="skip-link" href="#main">本文へスキップ</a>
     <Header />
     <main id="main">

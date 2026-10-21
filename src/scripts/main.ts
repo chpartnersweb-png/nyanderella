@@ -1,8 +1,10 @@
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Lenis from 'lenis';
+import { finishPageLoading } from './loading';
 
 gsap.registerPlugin(ScrollTrigger);
+const pageReady = finishPageLoading();
 
 const header = document.querySelector<HTMLElement>('.site-header');
 const menuButton = document.querySelector<HTMLButtonElement>('.menu-toggle');
@@ -178,9 +180,11 @@ media.add({ desktop: '(min-width: 761px)', mobile: '(max-width: 760px)', reduced
     gsap.ticker.add(ticker);
   }
 
-  const intro = gsap.timeline({ defaults: { ease: 'power2.out' } });
+  let active = true;
+  const intro = gsap.timeline({ paused: true, defaults: { ease: 'power2.out' } });
   intro.fromTo('.hero-image', { scale: 1.025 }, { scale: 1, duration: 1.1, clearProps: 'transform' }, 0);
   intro.fromTo('.hero-title-line', { y: 14, opacity: 0 }, { y: 0, opacity: 1, duration: .7, stagger: .09, clearProps: 'opacity,transform' }, .08);
+  pageReady.then(() => { if (active) intro.play(); });
 
   document.querySelectorAll<HTMLElement>('[data-reveal]').forEach(element => {
     if (element.getBoundingClientRect().top < window.innerHeight * .9) return;
@@ -197,6 +201,7 @@ media.add({ desktop: '(min-width: 761px)', mobile: '(max-width: 760px)', reduced
   }
 
   return () => {
+    active = false;
     if (ticker) gsap.ticker.remove(ticker);
     lenis?.destroy();
     lenis = undefined;
@@ -205,6 +210,7 @@ media.add({ desktop: '(min-width: 761px)', mobile: '(max-width: 760px)', reduced
 });
 
 const refreshLayout = () => { ScrollTrigger.refresh(); lenis?.resize(); updateScrollUi(); };
+pageReady.then(refreshLayout);
 if (document.readyState === 'complete') refreshLayout();
 else window.addEventListener('load', refreshLayout, { once: true });
 document.fonts.ready.then(refreshLayout);
