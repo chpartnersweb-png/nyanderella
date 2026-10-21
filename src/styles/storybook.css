@@ -218,6 +218,7 @@ html.is-loading{overflow:hidden}
  .notice-inner{flex-wrap:wrap;gap:10px 20px}.notice-inner>p{max-width:none}.notice-inner>a{margin-left:0}.notice-inner .mobile-only{display:none}
 }
 @media(max-width:760px){
+ .album-controls>span{align-self:stretch;text-align:center}
  .notice-inner{grid-template-columns:minmax(0,1fr)}
  .cats-intro>.button--guide{display:flex;width:fit-content;margin-inline:auto}
  :root{--header-height:72px}

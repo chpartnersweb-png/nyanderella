@@ -1,0 +1,82 @@
+---
+import { site } from '../data/site';
+import logo from '../assets/logo.png';
+import roomCats from '../assets/_a_img_1_caafbb15d6a3.jpg';
+
+if (!Astro.site) throw new Error('Set the production site URL in astro.config.mjs.');
+// Query strings and section hashes do not create separate indexable pages.
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
+const home = new URL('/', Astro.site).href;
+const socialImage = new URL('/ogp.png', Astro.site).href;
+const logoUrl = new URL(logo.src, Astro.site).href;
+const organizationId = `${home}#organization`;
+const websiteId = `${home}#website`;
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'AnimalShelter',
+      '@id': organizationId,
+      name: site.name,
+      url: home,
+      description: site.description,
+      logo: { '@type': 'ImageObject', url: logoUrl, width: logo.width, height: logo.height },
+      image: [new URL(roomCats.src, Astro.site).href],
+      telephone: site.phoneHref.replace(/^tel:0/, '+81'),
+      address: {
+        '@type': 'PostalAddress',
+        streetAddress: '赤羽台3-26-7 ドリーム1F',
+        addressLocality: '北区',
+        addressRegion: '東京都',
+        postalCode: site.postalCode,
+        addressCountry: 'JP',
+      },
+      hasMap: site.mapUrl,
+      sameAs: [site.instagramUrl, site.blogUrl, site.listingUrl],
+    },
+    {
+      '@type': 'WebSite',
+      '@id': websiteId,
+      url: home,
+      name: site.name,
+      alternateName: 'にゃんデレラ',
+      inLanguage: 'ja-JP',
+      publisher: { '@id': organizationId },
+    },
+    {
+      '@type': 'WebPage',
+      '@id': `${canonical}#webpage`,
+      url: canonical,
+      name: site.title,
+      description: site.description,
+      inLanguage: 'ja-JP',
+      isPartOf: { '@id': websiteId },
+      about: { '@id': organizationId },
+      mainEntity: { '@id': organizationId },
+    },
+  ],
+};
+const jsonLd = JSON.stringify(structuredData).replace(/</g, '\\u003c');
+---
+<title>{site.title}</title>
+<meta name="description" content={site.description} />
+<meta name="robots" content="index, follow, max-image-preview:large" />
+<link rel="canonical" href={canonical} />
+<link rel="sitemap" type="application/xml" href={new URL('/sitemap.xml', Astro.site).href} />
+<meta property="og:type" content="website" />
+<meta property="og:locale" content="ja_JP" />
+<meta property="og:site_name" content={site.name} />
+<meta property="og:title" content={site.title} />
+<meta property="og:description" content={site.description} />
+<meta property="og:url" content={canonical} />
+<meta property="og:image" content={socialImage} />
+<meta property="og:image:type" content="image/png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content={`${site.name}のロゴ`} />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={site.title} />
+<meta name="twitter:description" content={site.description} />
+<meta name="twitter:image" content={socialImage} />
+<meta name="twitter:image:alt" content={`${site.name}のロゴ`} />
+<script type="application/ld+json" set:html={jsonLd} />
