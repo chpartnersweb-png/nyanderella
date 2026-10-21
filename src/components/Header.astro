@@ -1,0 +1,13 @@
+---
+import Arrow from './Arrow.astro';
+import Wordmark from './Wordmark.astro';
+import { navigation } from '../data/site';
+---
+<header class="site-header" id="site-header">
+  <div class="header-inner">
+    <Wordmark />
+    <nav class="desktop-nav" aria-label="メインメニュー">{navigation.map(item => <a href={item.href}>{item.label}</a>)}<a href="#visit" class="header-visit">来訪のご案内 <Arrow /></a></nav>
+    <button type="button" class="menu-toggle" aria-expanded="false" aria-controls="mobile-nav"><span class="menu-toggle__label">メニュー</span><span class="menu-toggle__lines" aria-hidden="true"><span></span><span></span></span></button>
+  </div>
+  <nav class="mobile-nav" id="mobile-nav" aria-label="スマートフォンメニュー" hidden>{navigation.map((item,i) => <a href={item.href}><span class="mobile-nav__number">0{i+1}</span>{item.label}<Arrow /></a>)}<a href="#visit"><span class="mobile-nav__number">05</span>来訪のご案内<Arrow /></a></nav>
+</header>

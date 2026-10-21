@@ -1,16 +1,52 @@
 ---
+import '../styles/global.css';
+import '../styles/storybook.css';
+import { site } from '../data/site';
+import Header from '../components/Header.astro';
+import Hero from '../components/Hero.astro';
+import Cats from '../components/Cats.astro';
+import About from '../components/About.astro';
+import Room from '../components/Room.astro';
+import Adoption from '../components/Adoption.astro';
+import Support from '../components/Support.astro';
+import Faq from '../components/Faq.astro';
+import Visit from '../components/Visit.astro';
+import Footer from '../components/Footer.astro';
+import Arrow from '../components/Arrow.astro';
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="/favicon.ico" />
+    <link rel="stylesheet" href="/fonts/zen-maru-gothic.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={site.description} />
+    <meta name="theme-color" content="#fff8e9" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="ja_JP" />
+    <meta property="og:site_name" content={site.name} />
+    <meta property="og:title" content={`${site.name}｜東京都北区・赤羽`} />
+    <meta property="og:description" content={site.description} />
+    <meta property="og:image" content="/ogp.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{site.name}</title>
+  </head>
+
+  <body id="top">
+    <a class="skip-link" href="#main">本文へスキップ</a>
+    <Header />
+    <main id="main">
+      <Hero />
+      <aside class="notice"><div class="container notice-inner"><span class="notice-label"><span class="reservation-dot"></span> ご来訪について</span><p>にゃんデレラは完全予約制です。<br class="mobile-only" />開催日程は最新のお知らせをご確認ください。</p><a class="button button--primary button--guide" href={site.blogUrl} target="_blank" rel="noopener noreferrer">最新のお知らせ<Arrow /></a></div></aside>
+      <Cats /><About /><Room /><Adoption /><Support /><Faq /><Visit />
+    </main>
+    <Footer />
+    <script>
+      import '../scripts/main';
+    </script>
+  </body>
+
+
 </html>

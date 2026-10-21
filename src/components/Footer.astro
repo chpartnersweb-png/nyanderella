@@ -1,0 +1,8 @@
+---
+import Arrow from './Arrow.astro';
+import Wordmark from './Wordmark.astro';
+import { site, navigation } from '../data/site';
+---
+<footer class="site-footer"><div class="container footer-top"><Wordmark /><div class="footer-links"><div>{navigation.map(item => <a href={item.href}>{item.label}</a>)}</div><div><a href={site.instagramUrl} target="_blank" rel="noopener noreferrer">Instagram <Arrow /></a><a href={site.blogUrl} target="_blank" rel="noopener noreferrer">活動ブログ <Arrow /></a></div></div><a class="back-to-top" href="#top" aria-label="ページの先頭へ"><Arrow /></a></div><div class="container footer-bottom"><small>© {new Date().getFullYear()} {site.name}</small><span>東京都北区・赤羽 ｜ {site.room}</span><button type="button" class="privacy-open">個人情報の取り扱い</button></div></footer>
+<dialog class="privacy-dialog" id="privacy-dialog" aria-labelledby="privacy-title" data-lenis-prevent><div><button type="button" class="privacy-close" aria-label="閉じる">×</button><p class="section-kicker">PRIVACY</p><h2 id="privacy-title">個人情報の取り扱い</h2><p>このページには、お名前・ご住所などを入力して送信するフォームはありません。お電話などでお預かりした情報は、見学・譲渡・ご支援に関するご連絡と対応のために使用します。</p><p>ハグー、SNS、地図など外部サービスでの個人情報の取り扱いは、各サービスの方針をご確認ください。</p><p>お問い合わせ：<a href={site.phoneHref}>{site.phone}</a></p><button type="button" class="button button--primary privacy-close">閉じる</button></div></dialog>
+<nav class="mobile-dock" aria-label="すぐに見つかる来訪・猫紹介" hidden inert><a href="#visit">来訪のご案内<Arrow /></a><a href={site.listingUrl} target="_blank" rel="noopener noreferrer">猫たちを見る<Arrow /></a></nav>

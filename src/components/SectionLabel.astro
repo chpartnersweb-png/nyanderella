@@ -1,0 +1,6 @@
+---
+interface Props { number: string; text: string; light?: boolean }
+import Paw from './Paw.astro';
+const { number, text, light = false } = Astro.props;
+---
+<p class:list={['section-label', { 'section-label--light': light }]}><span>{number}</span><Paw /><span>{text}</span></p>

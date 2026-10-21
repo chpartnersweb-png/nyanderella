@@ -1,0 +1,17 @@
+---
+import { Image } from 'astro:assets';
+import catA from '../assets/cats/cat07.jpg';
+import catB from '../assets/cats/cat010.jpg';
+import catC from '../assets/cats/cat014.jpg';
+import Arrow from './Arrow.astro';
+import SectionLabel from './SectionLabel.astro';
+import { site } from '../data/site';
+import PhotoGallery from './PhotoGallery.astro';
+---
+<section class="cats section-space" id="cats" aria-labelledby="cats-title">
+  <div class="cats-layout container">
+    <div class="cats-intro" data-reveal><SectionLabel number="01" text="猫たちとの出会い" /><h2 id="cats-title">ひとりずつ、<br>ちがう愛おしさ。</h2><p>表情も、しぐさも、その子らしく。<br>まずは、猫たちの日常をのぞいてみませんか。</p><a class="button button--primary button--guide" href={site.listingUrl} target="_blank" rel="noopener noreferrer">里親募集中の猫を見る<Arrow /></a><small>最新の募集情報はハグーでご案内しています。</small></div>
+    <div class="cat-portraits"><figure class="cat-portrait cat-portrait--lead" data-reveal><div class="cat-photo"><Image src={catA} alt="くつろぎながらこちらを見る黒白の猫" width={560} format="webp" loading="lazy" /></div></figure><figure class="cat-portrait cat-portrait--second" data-reveal><div class="cat-photo"><Image src={catB} alt="横を向いてゆったり座る茶白の猫" width={420} format="webp" loading="lazy" /></div></figure><figure class="cat-portrait cat-portrait--third" data-reveal><div class="cat-photo"><Image src={catC} alt="耳を立ててこちらを見つめるキジ猫" width={420} format="webp" loading="lazy" /></div></figure></div>
+  </div>
+  <PhotoGallery />
+</section>

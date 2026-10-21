@@ -1,0 +1,42 @@
+---
+import { Image } from 'astro:assets';
+import cat from '../assets/cats/cat012.jpg';
+import SectionLabel from './SectionLabel.astro';
+import LineIcon from './LineIcon.astro';
+import { adoptionSteps, adoptionConditions, adoptionFees } from '../data/site';
+const total = adoptionFees.reduce((sum, [,fee]) => sum + fee, 0);
+const steps = [
+  { title: '出会う・相談する', short: '猫と会い、暮らしのことをお話し。', icon: 'message' },
+  { title: '環境を確認する', short: '間取りやお部屋の様子を確認。', icon: 'home' },
+  { title: 'お迎えの準備', short: '脱走防止と猫用品をそろえて。', icon: 'shield' },
+  { title: '家族として迎える', short: '契約後、ご自宅へお届け。', icon: 'heart' },
+] as const;
+const essentials = [
+  { icon: 'home', title: 'ペット可の住まい', detail: '50㎡以上' },
+  { icon: 'shield', title: '完全室内飼い', detail: '脱走防止対策' },
+  { icon: 'heart', title: '家族みんなの同意', detail: '終生大切に' },
+  { icon: 'location', title: 'お届けの範囲', detail: '赤羽から車で1時間以内' },
+] as const;
+---
+<section class="adoption section-space" id="adoption" aria-labelledby="adoption-title">
+  <div class="container adoption-layout">
+    <div class="adoption-intro" data-reveal>
+      <SectionLabel number="04" text="家族になるまで" /><h2 id="adoption-title">出会いから、<br>家族になるまで。</h2>
+      <figure class="adoption-photo"><Image src={cat} alt="前足を重ねてゆったりくつろぐ猫" width={560} format="webp" loading="lazy" /></figure>
+    </div>
+    <div class="adoption-process"><div class="steps-wrapper">
+      <span class="steps-line" aria-hidden="true"><span></span></span>
+      <ol class="adoption-steps">{steps.map((step,i) => <li class="adoption-step" data-reveal><span class="step-number">0{i+1}</span><div><h3>{step.title}</h3><p>{step.short}</p></div><LineIcon name={step.icon} /></li>)}</ol></div>
+      <details class="disclosure process-detail" data-disclosure><summary><span>手順と準備を詳しく見る</span><span class="disclosure-icon" aria-hidden="true"></span></summary><div class="disclosure-content"><ol>{adoptionSteps.map(step => <li><h4>{step.title}</h4><p>{step.text}</p></li>)}</ol></div></details>
+    </div>
+  </div>
+</section>
+<section class="conditions section-space" id="conditions" aria-labelledby="conditions-title">
+  <div class="container conditions-inner">
+    <div class="conditions-heading" data-reveal><div><p class="section-kicker">FOR A LIFETIME TOGETHER</p><h2 id="conditions-title">お迎えの前に、<br>大切なお約束。</h2></div><p>まずは、4つのポイントをご確認ください。</p></div>
+    <div class="essential-grid" data-reveal>{essentials.map(item => <div><LineIcon name={item.icon} /><h3>{item.title}</h3><p>{item.detail}</p></div>)}</div>
+    <details class="disclosure" data-disclosure><summary><span>お迎えの条件を詳しく見る</span><span class="disclosure-icon" aria-hidden="true"></span></summary><div class="disclosure-content"><ul class="condition-list">{adoptionConditions.map(condition => <li>{condition}</li>)}</ul><p>年齢やご家族構成によって、後見人のご同行などをお願いする場合があります。預かり制度も含め、詳しくはご相談ください。</p></div></details>
+    <div class="adoption-cost" data-reveal><div><p>譲渡費用の目安</p><span>医療と日々のお世話にかかる費用です。</span></div><p class="cost-amount">{total.toLocaleString('ja-JP')}<span>円</span></p></div>
+    <details class="disclosure" data-disclosure><summary><span>費用の内訳を見る</span><span class="disclosure-icon" aria-hidden="true"></span></summary><div class="disclosure-content"><dl class="fee-list">{adoptionFees.map(([label,fee]) => <div><dt>{label}</dt><dd>{fee.toLocaleString('ja-JP')}円</dd></div>)}</dl><p>上記は譲渡費用の目安です。個別の費用やお届けにかかる交通費などは、ご相談時にご確認ください。</p></div></details>
+  </div>
+</section>

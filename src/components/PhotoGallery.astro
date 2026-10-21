@@ -1,0 +1,46 @@
+---
+import { Image, getImage } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+import Arrow from './Arrow.astro';
+import { site } from '../data/site';
+const sources = import.meta.glob<{ default: ImageMetadata }>('../assets/cats/*.jpg', { eager: true });
+const preferred = ['cat05.jpg', 'cat09.jpg', 'cat011.jpg', 'cat015.jpg', 'cat019.jpg', 'cat021.jpg'];
+const descriptions: Record<string, string> = {
+  'cat01.jpg': '大きな耳と目が印象的な黒白の猫', 'cat02.jpg': 'こちらを見つめる黒白の猫',
+  'cat03.jpg': 'ケージの棚で立ち上がる黒白の猫', 'cat04.jpg': '横を向く黒白の猫',
+  'cat05.jpg': 'ハンモックでくつろぐ黒白の猫', 'cat06.jpg': '棚の上から顔をのぞかせる黒白の猫',
+  'cat07.jpg': '前足をそろえてくつろぐ黒白の猫', 'cat08.jpg': '近くからこちらを見る黒白の猫',
+  'cat09.jpg': '耳を立てて座る茶白の猫', 'cat010.jpg': '横を向いてゆったり座る茶白の猫',
+  'cat011.jpg': 'すらりと座る白とキジ模様の猫', 'cat012.jpg': '前足を重ねて休む白とキジ模様の猫',
+  'cat013.jpg': '少し首をかしげるキジ猫', 'cat014.jpg': 'こちらを見つめるキジ猫',
+  'cat015.jpg': '黒と茶の毛並みが印象的な猫', 'cat016.jpg': '近くから見つめる黒と茶の猫',
+  'cat017.jpg': '前足をそろえた茶白の猫', 'cat018.jpg': '穏やかな表情の茶白の猫',
+  'cat019.jpg': 'ふわふわした毛並みの黒白の猫', 'cat020.jpg': 'ゆったり座るふわふわした黒白の猫',
+  'cat021.jpg': '棚の上に立つキジ猫', 'cat022.jpg': '目を丸くして見つめるキジ猫',
+  'cat023.jpg': '横に視線を向けるキジ猫', 'cat024.jpg': 'ケージの中でくつろぐキジ猫',
+};
+const photos = await Promise.all(Object.entries(sources).sort(([a], [b]) => {
+  const first = preferred.indexOf(a.split('/').pop()!);
+  const second = preferred.indexOf(b.split('/').pop()!);
+  if (first !== -1 || second !== -1) return (first === -1 ? 99 : first) - (second === -1 ? 99 : second);
+  return a.localeCompare(b, 'ja', { numeric: true });
+}).map(async ([path, source]) => {
+  const name = path.split('/').pop()!;
+  const full = await getImage({ src: source.default, width: source.default.width, format: 'webp', quality: 88 });
+  return { source: source.default, full: full.src, alt: descriptions[name] ?? '保護猫ルーム にゃんデレラの猫たちの日常' };
+}));
+---
+<div class="photo-album container" aria-labelledby="album-title">
+  <div class="album-heading"><div><p class="section-kicker">LITTLE MOMENTS</p><h3 id="album-title">いつもの表情、いろいろ。</h3></div><div class="album-controls"><button type="button" class="text-link album-toggle" aria-expanded="false" aria-controls="album-grid" hidden><span>すべての写真を見る（24枚）</span><Arrow direction="down" /></button><span>写真を選ぶと、大きく見られます。</span></div></div>
+  <div class="album-grid" id="album-grid">
+    {photos.map((photo, index) => <a class="album-photo" href={photo.full} data-gallery-photo data-gallery-src={photo.full} data-gallery-alt={photo.alt} aria-label={`${photo.alt}を拡大する（${index + 1}枚目）`}><Image src={photo.source} alt={photo.alt} width={360} format="webp" loading="lazy" /><span class="album-zoom" aria-hidden="true">＋</span></a>)}
+  </div>
+  <div class="album-bottom"><p>猫たちの日常から。最新の募集状況はハグーをご確認ください。</p><a class="button button--primary button--guide" href={site.listingUrl} target="_blank" rel="noopener noreferrer">里親募集中の猫を見る<Arrow /></a></div>
+</div>
+<dialog class="photo-dialog" id="photo-dialog" aria-label="猫たちの日常" data-lenis-prevent>
+  <div class="photo-dialog__inner">
+    <div class="photo-dialog__top"><button type="button" class="photo-dialog__close" aria-label="写真を閉じる">閉じる <span aria-hidden="true">×</span></button></div>
+    <figure><img class="photo-dialog__image" src={photos[0].full} alt={photos[0].alt} width="728" height="728" loading="lazy" /></figure>
+    <div class="photo-dialog__navigation"><button type="button" class="photo-prev" aria-label="前の写真">← 前の写真</button><span class="photo-counter" aria-live="polite"></span><button type="button" class="photo-next" aria-label="次の写真">次の写真 →</button></div>
+  </div>
+</dialog>

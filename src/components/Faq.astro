@@ -1,0 +1,5 @@
+---
+import SectionLabel from './SectionLabel.astro';
+import { faqs } from '../data/site';
+---
+<section class="faq section-space" id="faq" aria-labelledby="faq-title"><div class="container faq-layout"><div data-reveal><SectionLabel number="06" text="よくあるご質問" /><h2 id="faq-title">気になること。</h2><p>はじめの一歩の、その前に。</p></div><div class="faq-list">{faqs.map(faq => <details class="disclosure" data-disclosure data-reveal><summary><span class="faq-q">Q</span><span>{faq.question}</span><span class="disclosure-icon" aria-hidden="true"></span></summary><div class="disclosure-content"><p>{faq.answer}</p></div></details>)}</div></div></section>

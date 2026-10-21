@@ -1,0 +1,27 @@
+---
+import { Image } from 'astro:assets';
+import catStanding from '../assets/cats/cat021.jpg';
+import catFluffy from '../assets/cats/cat020.jpg';
+import catTortie from '../assets/cats/cat016.jpg';
+import SectionLabel from './SectionLabel.astro';
+---
+<section class="about section-space" id="about" aria-labelledby="about-title">
+  <div class="container">
+    <div class="about-heading" data-reveal>
+      <div><SectionLabel number="02" text="私たちの活動" /><h2 id="about-title">この街で、<br>猫の明日をつなぐ。</h2></div>
+      <p>行き場を失った猫を保護し、<br>安心できる暮らしと、新しい家族へ。</p>
+    </div>
+    <div class="about-layout">
+      <figure class="activity-photos" data-reveal>
+        <Image class="activity-photo--large" src={catStanding} alt="棚の上でこちらを見つめるキジ猫" width={560} format="webp" loading="lazy" />
+        <Image class="activity-photo--small" src={catFluffy} alt="ふわふわの黒白猫の穏やかな表情" width={340} format="webp" loading="lazy" />
+        <Image class="activity-photo--detail" src={catTortie} alt="黒と茶の毛並みの猫のまなざし" width={340} format="webp" loading="lazy" />
+      </figure>
+      <div class="activity-list">
+        <article class="activity" data-reveal><span class="activity-number">01</span><div><p class="activity-en">地域で暮らす</p><h3>TNR・地域猫活動</h3><p>地域の猫と人が、安心して共に暮らせる環境へ。</p></div></article>
+        <article class="activity" data-reveal><span class="activity-number">02</span><div><p class="activity-en">日々を支える</p><h3>保護とお世話</h3><p>一匹ずつの健康と、その子らしい毎日を見守ります。</p></div></article>
+        <article class="activity" data-reveal><span class="activity-number">03</span><div><p class="activity-en">家族へつなぐ</p><h3>里親募集・譲渡</h3><p>猫にも人にも合った、ずっとのご縁を探します。</p></div></article>
+      </div>
+    </div>
+  </div>
+</section>

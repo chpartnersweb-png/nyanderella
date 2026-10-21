@@ -1,0 +1,21 @@
+---
+import { Image } from 'astro:assets';
+import hero from '../assets/generated/hero-storybook.png';
+import Arrow from './Arrow.astro';
+import Paw from './Paw.astro';
+import { site } from '../data/site';
+---
+<section class="hero" aria-labelledby="hero-title">
+  <figure class="hero-media">
+    <div class="hero-media__frame"><Image src={hero} alt="あたたかな窓辺でくつろぐ猫を描いた、やさしい水彩タッチのイラスト" widths={[640, 960, 1400, 1800]} sizes="100vw" format="webp" quality={85} loading="eager" fetchpriority="high" class="hero-image" /></div>
+  </figure>
+  <div class="hero-content">
+   <div class="hero-copy">
+    <p class="hero-greeting"><Paw />東京都北区・赤羽で、会いましょう。</p>
+    <h1 id="hero-title"><span class="hero-title-line">この街で、</span><span class="hero-title-line">家族を待っています<span class="hero-period">。</span></span></h1>
+    <p class="hero-description">猫にも、人にも、ほっとできる居場所を。</p>
+   </div>
+   <div class="hero-actions"><a class="button button--primary" href="#visit">見学・譲渡のご相談<Arrow /></a></div>
+  </div>
+  <a class="hero-scroll" href={site.listingUrl} target="_blank" rel="noopener noreferrer"><Paw /><span>猫たちに会いにいく</span><Arrow /></a>
+</section>

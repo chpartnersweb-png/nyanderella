@@ -1,0 +1,30 @@
+---
+import SectionLabel from './SectionLabel.astro';
+import Arrow from './Arrow.astro';
+import { site } from '../data/site';
+---
+<section class="visit section-space" id="visit" aria-labelledby="visit-title">
+  <div class="container visit-layout">
+    <div class="visit-info" data-reveal>
+      <SectionLabel number="07" text="来訪のご案内" />
+      <h2 id="visit-title"><span class="heading-line">まずは、</span><span class="heading-line">会いに来ることから。</span></h2>
+      <p class="visit-room">{site.room}</p>
+      <dl class="access-list">
+        <div><dt>所在地</dt><dd>〒{site.postalCode}<br>東京都北区赤羽台3-26-7<br>ドリーム1F<br><a class="button button--primary button--guide" href={site.mapUrl} target="_blank" rel="noopener noreferrer">Google マップで場所を見る<Arrow /></a></dd></div>
+        <div><dt>アクセス</dt><dd>{site.access}</dd></div>
+        <div><dt>ご来訪</dt><dd>{site.schedule}<br><a class="button button--primary button--guide" href={site.blogUrl} target="_blank" rel="noopener noreferrer">開催日程・最新のお知らせ<Arrow /></a></dd></div>
+      </dl>
+    </div>
+    <div class="visit-contact" data-reveal>
+      <p class="section-kicker">LET’S FIND A NEW BEGINNING</p>
+      <h3>猫との暮らしを、<br>一緒に考えましょう。</h3>
+      <p>見学や譲渡のこと、支援のこと。<br>まずはお気軽にお電話ください。</p>
+      <a class="button button--primary contact-phone" href={site.phoneHref} aria-label={`${site.phone} に電話をかける`}>
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m7 3 3 5-2 2a15 15 0 0 0 6 6l2-2 5 3-1 4c-9 1-18-8-17-17l4-1Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" /></svg>
+        <span class="contact-phone__copy"><span class="contact-phone__label">タップ・クリックで電話する</span><span class="contact-phone__number">{site.phone}</span></span>
+      </a>
+      <p class="contact-small">ご来訪前に、最新の営業・開催情報を<br>ご確認いただけますようお願いします。</p>
+      <a class="button button--primary button--guide" href={site.blogUrl} target="_blank" rel="noopener noreferrer">最新のお知らせを読む<Arrow /></a>
+    </div>
+  </div>
+</section>

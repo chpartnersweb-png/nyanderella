@@ -1,0 +1,8 @@
+---
+import { Image } from 'astro:assets';
+import roomCat from '../assets/_a_img_1_caafbb15d6a3.jpg';
+import logo from '../assets/logo.png';
+import SectionLabel from './SectionLabel.astro';
+import Arrow from './Arrow.astro';
+---
+<section class="room section-space" id="room" aria-labelledby="room-title"><div class="container room-layout"><figure class="room-photo" data-reveal><Image src={roomCat} alt="保護猫ルームで寄り添って過ごす猫たち" width={700} format="webp" loading="lazy" /></figure><div class="room-copy" data-reveal><SectionLabel number="03" text="保護猫ルームのご案内" /><Image src={logo} alt="保護猫ルーム にゃんデレラ" width={280} format="webp" loading="lazy" class="room-logo" /><h2 id="room-title"><span class="heading-line">猫たちとの出会いは、</span><span class="heading-line">ここから。</span></h2><p>赤羽駅から徒歩10分。<br>写真では伝わらないしぐさや表情に、<br>ゆっくり会いに来ませんか。</p><div class="room-actions"><div class="room-meta"><span class="reservation-dot"></span> ご来訪は完全予約制です</div><a class="button button--primary button--guide" href="#visit">来訪・ご予約について<Arrow direction="down" /></a></div></div></div></section>
